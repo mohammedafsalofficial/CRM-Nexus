@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { SignupResponse } from "@/app/actions/auth";
+import { AuthResponse } from "@/app/actions/auth";
 
 dotenv.config();
 
@@ -12,13 +12,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendVerficationOTP(email: string, otp: string, token: string): Promise<SignupResponse> {
+export async function sendVerficationOTP(email: string, otp: string, token: string): Promise<AuthResponse> {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
     subject: "Verify Your Email",
-    text: `Your verification OTP is: ${otp}. It is valid for 10 minutes.`,
-    html: `<p>Your verification OTP is: <strong>${otp}</strong></p><p>It is valid for 10 minutes.</p>`,
+    text: `Your verification OTP is: ${otp}. It is valid for 2 minutes.`,
+    html: `<p>Your verification OTP is: <strong>${otp}</strong></p><p>It is valid for 2 minutes.</p>`,
   };
 
   try {
@@ -28,4 +28,11 @@ export async function sendVerficationOTP(email: string, otp: string, token: stri
     console.error("Error sending email:", err);
     return { success: false, message: "Error sending verification OTP" };
   }
+}
+
+export function generateOTP() {
+  const otp = Math.floor(1000 + Math.random() * 9000).toString();
+  const otpExpires = new Date(Date.now() + 2 * 60 * 1000);
+
+  return { otp, otpExpires };
 }

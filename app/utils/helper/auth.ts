@@ -1,4 +1,4 @@
-import { SignupResponse } from "@/app/actions/auth";
+import { AuthResponse } from "@/app/actions/auth";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -7,7 +7,7 @@ dotenv.config();
 
 const SECRET_KEY = process.env.JWT_SECRET as string;
 
-export function validateInput(email: string, password: string): SignupResponse | null {
+export function validateInput(email: string, password: string): AuthResponse | null {
   if (!email && !password) return { success: false, message: "Email and Password cannot be empty" };
   if (!email) return { success: false, message: "Email cannot be empty" };
   if (!password) return { success: false, message: "Password cannot be empty" };
@@ -30,17 +30,9 @@ export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10);
 }
 
-export function generateVerificationToken(email: string): { token: string; expiresAt: Date } {
+export function generateVerificationToken(email: string) {
   const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
-  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-  return { token, expiresAt };
-}
-
-export function generateOTP() {
-  const otp = Math.floor(1000 + Math.random() * 9000).toString();
-  const otpExpires = new Date(Date.now() + 1 * 60 * 1000);
-
-  return { otp, otpExpires };
+  return token;
 }
 
 export function decodeJwtToken(token: string) {

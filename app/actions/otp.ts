@@ -1,13 +1,13 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { SignupResponse } from "./auth";
-import { decodeJwtToken, generateOTP } from "../utils/helper/auth";
-import { sendVerficationOTP } from "../utils/helper/otp";
+import { AuthResponse } from "./auth";
+import { decodeJwtToken } from "../utils/helper/auth";
+import { generateOTP, sendVerficationOTP } from "../utils/helper/otp";
 
 const prisma = new PrismaClient();
 
-export async function verifyOtp(previousState: SignupResponse, formData: FormData): Promise<SignupResponse> {
+export async function verifyOtp(previousState: AuthResponse, formData: FormData): Promise<AuthResponse> {
   const otp = formData.get("otp") as string;
   const token = formData.get("token") as string;
 
@@ -47,7 +47,7 @@ export async function verifyOtp(previousState: SignupResponse, formData: FormDat
   return { success: true, message: "OTP verified successfully" };
 }
 
-export async function resendOtp(previousState: SignupResponse, formData: FormData): Promise<SignupResponse> {
+export async function resendOtp(previousState: AuthResponse, formData: FormData): Promise<AuthResponse> {
   const token = formData.get("token") as string;
   const decoded = decodeJwtToken(token);
   if (!decoded?.email) {

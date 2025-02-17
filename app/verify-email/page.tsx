@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation";
 import OTPCard from "../components/UI/OTPCard";
+import { decodeJwtToken } from "../utils/helper/auth";
 
 type OtpPageProps = {
   searchParams: Promise<{ token: string }>;
@@ -6,6 +8,12 @@ type OtpPageProps = {
 
 export default async function OtpPage({ searchParams }: OtpPageProps) {
   const { token } = await searchParams;
+
+  const decodedToken = decodeJwtToken(token);
+
+  if (!decodedToken?.email) {
+    redirect("/signup");
+  }
 
   return (
     <div className="h-screen flex items-center justify-center bg-zinc-900 text-primary">
