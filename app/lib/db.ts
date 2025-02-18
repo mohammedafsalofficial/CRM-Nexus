@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import { prisma } from "../utils/constants/prisma";
 
 export async function checkUserExists(email: string): Promise<boolean> {
@@ -5,13 +6,14 @@ export async function checkUserExists(email: string): Promise<boolean> {
   return !!user;
 }
 
-export async function saveUser(email: string, passwordHash: string, otp: string, otpExpires: Date) {
+export async function saveUser(email: string, passwordHash: string, otp: string, otpExpires: Date, role: Role) {
   await prisma.users.create({
     data: {
       email,
       password_hash: passwordHash,
       otp,
       otpExpires,
+      role,
     },
   });
 }

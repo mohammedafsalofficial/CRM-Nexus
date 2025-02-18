@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { AuthResponse } from "@/app/types/auth";
 import { cookies } from "next/headers";
-import { checkUserExists } from "@/app/lib/auth";
+import { checkUserExists } from "@/app/lib/db";
 
 export async function POST(req: Request): Promise<NextResponse<AuthResponse>> {
   const { email, password } = await req.json();

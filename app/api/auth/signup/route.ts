@@ -1,9 +1,10 @@
-import { saveUser } from "@/app/lib/auth";
+import { saveUser } from "@/app/lib/db";
 import { sendVerficationOTP } from "@/app/lib/otp";
 import { AuthResponse } from "@/app/types/auth";
 import { prisma } from "@/app/utils/constants/prisma";
 import { generateVerificationToken, hashPassword, validateInput } from "@/app/utils/helper/auth";
 import { generateOTP } from "@/app/utils/helper/otp";
+import { Role } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request): Promise<NextResponse<AuthResponse>> {
@@ -23,7 +24,7 @@ export async function POST(req: Request): Promise<NextResponse<AuthResponse>> {
   const token = generateVerificationToken(email);
   const { otp, otpExpires } = generateOTP();
 
-  await saveUser(email, hashedPassword, otp, otpExpires);
+  await saveUser(email, hashedPassword, otp, otpExpires, Role.CUSTOMER);
 
   const emailResponse = await sendVerficationOTP(email, otp, token);
 

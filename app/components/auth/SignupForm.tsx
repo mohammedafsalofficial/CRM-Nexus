@@ -23,8 +23,6 @@ export default function SignupForm() {
     const email = formData.get("email");
     const password = formData.get("password");
 
-    console.log(email, password);
-
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
