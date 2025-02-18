@@ -14,7 +14,7 @@ export default function SigninForm() {
 
   useEffect(() => {
     if (state.success) {
-      setTimeout(() => router.push("/dashboard"), 1000);
+      setTimeout(() => router.push("/menu/dashboard"), 1000);
     }
   }, [state, router]);
 
