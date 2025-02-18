@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { AuthResponse } from "@/app/actions/auth";
+import { AuthResponse } from "@/app/types/auth";
 
 dotenv.config();
 

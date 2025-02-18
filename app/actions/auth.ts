@@ -5,7 +5,7 @@ import { prisma } from "../utils/constants/prisma";
 import { generateVerificationToken, validateInput } from "../utils/helper/auth";
 import bcrypt from "bcrypt";
 
-async function checkUserExists(email: string): Promise<boolean> {
+export async function checkUserExists(email: string): Promise<boolean> {
   const user = await prisma.users.findUnique({ where: { email }, select: { id: true, password_hash: true } });
   return !!user;
 }

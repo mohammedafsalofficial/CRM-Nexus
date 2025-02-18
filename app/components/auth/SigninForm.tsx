@@ -1,32 +1,56 @@
 "use client";
 
-import { signin } from "@/app/actions/auth";
+import { AuthResponse } from "@/app/types/auth";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { useState } from "react";
 
 export default function SigninForm() {
-  const [state, formAction, pending] = useActionState(signin, {
+  const [authResponse, setAuthResponse] = useState<AuthResponse>({
     success: false,
     message: null,
+    token: "",
   });
-
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (state.success) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    const currentTarget = e.currentTarget;
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    const response = await fetch("/api/auth/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data: AuthResponse = await response.json();
+
+    setAuthResponse(data);
+    setLoading(false);
+
+    if (data.success) {
+      currentTarget.reset();
       setTimeout(() => router.push("/menu/dashboard"), 1000);
     }
-  }, [state, router]);
+  }
 
   return (
-    <form action={formAction} className="flex flex-col text-left mt-5 md:mt-10 w-full">
-      {state.message && (
+    <form onSubmit={handleSubmit} className="flex flex-col text-left mt-5 md:mt-10 w-full">
+      {authResponse.message && (
         <div
           className={`p-3 rounded-md text-sm mb-5 border ${
-            state.success ? "bg-green-100 text-green-700 border-green-500" : "bg-red-100 text-red-700 border-red-500"
+            authResponse.success
+              ? "bg-green-100 text-green-700 border-green-500"
+              : "bg-red-100 text-red-700 border-red-500"
           }`}
         >
-          {state.message}
+          {authResponse.message}
         </div>
       )}
 
@@ -53,12 +77,12 @@ export default function SigninForm() {
       <button
         type="submit"
         className="bg-primary text-white text-sm h-10 mt-5 flex items-center justify-center gap-2 w-full"
-        disabled={pending}
+        disabled={loading}
       >
-        {pending && (
+        {loading && (
           <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
         )}
-        {!pending && "Login"}
+        {!loading && "Login"}
       </button>
     </form>
   );
