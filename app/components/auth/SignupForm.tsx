@@ -1,31 +1,60 @@
 "use client";
 
-import { signup } from "@/app/actions/auth";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { AuthResponse } from "@/app/types/auth";
 
 export default function SignupForm() {
-  const [state, formAction, pending] = useActionState(signup, {
+  const [authResponse, setAuthResponse] = useState<AuthResponse>({
     success: false,
     message: null,
+    token: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (state.success) {
-      setTimeout(() => router.push(`/verify-email?token=${state.token}`), 2000);
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    const currentTarget = e.currentTarget;
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    console.log(email, password);
+
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data: AuthResponse = await response.json();
+
+    setAuthResponse(data);
+    setLoading(false);
+
+    if (data.success) {
+      currentTarget.reset();
+      setTimeout(() => {
+        router.push(`/verify-email?token=${data.token}`);
+      }, 2000);
     }
-  }, [state, router]);
+  }
 
   return (
-    <form action={formAction} className="flex flex-col text-left mt-5 md:mt-10 w-full">
-      {state.message && (
+    <form onSubmit={handleSubmit} className="flex flex-col text-left mt-5 md:mt-10 w-full">
+      {authResponse.message && (
         <div
           className={`p-3 rounded-md text-sm mb-5 border ${
-            state.success ? "bg-green-100 text-green-700 border-green-500" : "bg-red-100 text-red-700 border-red-500"
+            authResponse.success
+              ? "bg-green-100 text-green-700 border-green-500"
+              : "bg-red-100 text-red-700 border-red-500"
           }`}
         >
-          {state.message}
+          {authResponse.message}
         </div>
       )}
 
@@ -52,12 +81,12 @@ export default function SignupForm() {
       <button
         type="submit"
         className="bg-primary text-white text-sm h-10 mt-5 flex items-center justify-center gap-2 w-full"
-        disabled={pending}
+        disabled={loading}
       >
-        {pending && (
+        {loading && (
           <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
         )}
-        {!pending && "Sign Up"}
+        {!loading && "Sign Up"}
       </button>
     </form>
   );

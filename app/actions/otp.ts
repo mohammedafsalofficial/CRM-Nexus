@@ -1,9 +1,9 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { AuthResponse } from "./auth";
 import { decodeJwtToken } from "../utils/helper/auth";
 import { generateOTP, sendVerficationOTP } from "../utils/helper/otp";
+import { AuthResponse } from "../types/auth";
 
 const prisma = new PrismaClient();
 

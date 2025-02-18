@@ -1,7 +1,7 @@
-import { AuthResponse } from "@/app/actions/auth";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
+import { AuthResponse } from "@/app/types/auth";
 
 dotenv.config();
 
