@@ -1,12 +1,23 @@
-import Divider from "../components/UI/Divider";
+import { cookies } from "next/headers";
 import Navbar from "../components/UI/Navbar";
 import Sidebar from "../components/UI/Sidebar";
+import { decodeJwtToken } from "../utils/helper/auth";
+import { redirect } from "next/navigation";
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+
+  const authToken = cookieStore.get("authToken")?.value as string;
+  const user = decodeJwtToken(authToken);
+
+  if (!user) {
+    redirect("/signin");
+  }
+
   return (
     <section className="h-screen p-5">
       <div className="h-full flex items-center justify-between">

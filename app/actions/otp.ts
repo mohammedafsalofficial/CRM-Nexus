@@ -1,11 +1,10 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { decodeJwtToken } from "../utils/helper/auth";
-import { generateOTP, sendVerficationOTP } from "../utils/helper/otp";
+import { generateOTP } from "../utils/helper/otp";
 import { AuthResponse } from "../types/auth";
-
-const prisma = new PrismaClient();
+import { prisma } from "../utils/constants/prisma";
+import { sendVerficationOTP } from "../lib/otp";
 
 export async function verifyOtp(previousState: AuthResponse, formData: FormData): Promise<AuthResponse> {
   const otp = formData.get("otp") as string;

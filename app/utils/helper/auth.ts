@@ -35,6 +35,11 @@ export function generateVerificationToken(email: string) {
   return token;
 }
 
+export function generateAuthToken(userId: number, email: string) {
+  const authToken = jwt.sign({ userId, email }, SECRET_KEY, { expiresIn: "1m" });
+  return authToken;
+}
+
 export function decodeJwtToken(token: string) {
   try {
     return jwt.verify(token, SECRET_KEY) as JwtPayload;

@@ -1,8 +1,9 @@
-import { saveUser } from "@/app/actions/auth";
+import { saveUser } from "@/app/lib/auth";
+import { sendVerficationOTP } from "@/app/lib/otp";
 import { AuthResponse } from "@/app/types/auth";
 import { prisma } from "@/app/utils/constants/prisma";
 import { generateVerificationToken, hashPassword, validateInput } from "@/app/utils/helper/auth";
-import { generateOTP, sendVerficationOTP } from "@/app/utils/helper/otp";
+import { generateOTP } from "@/app/utils/helper/otp";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request): Promise<NextResponse<AuthResponse>> {
