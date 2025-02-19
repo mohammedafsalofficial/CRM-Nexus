@@ -1,8 +1,10 @@
 import { cookies } from "next/headers";
-import Navbar from "../components/UI/Navbar";
-import Sidebar from "../components/UI/Sidebar";
-import { decodeJwtToken } from "../utils/helper/auth";
+import Navbar from "../../components/UI/Navbar";
+import Sidebar from "../../components/UI/Sidebar";
+import { isAuthencticated } from "../actions/auth";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import NavbarLoader from "@/components/UI/NavbarLoader";
 
 export default async function Layout({
   children,
@@ -10,11 +12,10 @@ export default async function Layout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-
   const authToken = cookieStore.get("authToken")?.value as string;
-  const user = decodeJwtToken(authToken);
+  const userId = await isAuthencticated(authToken);
 
-  if (!user) {
+  if (!userId) {
     redirect("/signin");
   }
 
@@ -26,7 +27,10 @@ export default async function Layout({
         </div>
 
         <div className="h-full w-4/5 flex flex-col items-start space-y-5">
-          <Navbar />
+          <Suspense fallback={<NavbarLoader />}>
+            <Navbar userId={userId} />
+          </Suspense>
+
           <div className="h-[0.15rem] w-full bg-gray-200"></div>
           <div className="px-5 h-full w-full">{children}</div>
         </div>

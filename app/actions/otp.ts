@@ -1,10 +1,10 @@
 "use server";
 
-import { decodeJwtToken } from "../utils/helper/auth";
-import { generateOTP } from "../utils/helper/otp";
-import { AuthResponse } from "../types/auth";
-import { prisma } from "../utils/constants/prisma";
-import { sendVerficationOTP } from "../lib/otp";
+import { decodeJwtToken } from "../../utils/helper/auth";
+import { generateOTP } from "../../utils/helper/otp";
+import { AuthResponse } from "../../types/auth";
+import { prisma } from "../../utils/constants/prisma";
+import { sendVerficationOTP } from "../../lib/otp";
 
 export async function verifyOtp(previousState: AuthResponse, formData: FormData): Promise<AuthResponse> {
   const otp = formData.get("otp") as string;

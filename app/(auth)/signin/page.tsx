@@ -1,4 +1,4 @@
-import SigninCard from "@/app/components/UI/SigninCard";
+import SigninCard from "@/components/UI/SigninCard";
 
 export default function Page() {
   return (

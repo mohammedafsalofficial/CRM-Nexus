@@ -1,10 +1,10 @@
-import { prisma } from "@/app/utils/constants/prisma";
-import { generateAuthToken, validateInput } from "@/app/utils/helper/auth";
+import { prisma } from "@/utils/constants/prisma";
+import { generateAuthToken, validateInput } from "@/utils/helper/auth";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { AuthResponse } from "@/app/types/auth";
+import { AuthResponse } from "@/types/auth";
 import { cookies } from "next/headers";
-import { checkUserExists } from "@/app/lib/db";
+import { checkUserExists } from "@/app/actions/db";
 
 export async function POST(req: Request): Promise<NextResponse<AuthResponse>> {
   const { email, password } = await req.json();

@@ -1,6 +1,6 @@
 "use client";
 
-import { NAV_MENU_ITEMS } from "@/app/utils/constants/navbar";
+import { NAV_MENU_ITEMS } from "@/utils/constants/navbar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

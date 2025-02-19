@@ -1,5 +1,7 @@
+"use server";
+
 import { Role } from "@prisma/client";
-import { prisma } from "../utils/constants/prisma";
+import { prisma } from "../../utils/constants/prisma";
 
 export async function checkUserExists(email: string): Promise<boolean> {
   const user = await prisma.users.findUnique({ where: { email }, select: { id: true, password_hash: true } });
@@ -16,4 +18,14 @@ export async function saveUser(email: string, passwordHash: string, otp: string,
       role,
     },
   });
+}
+
+export async function getUser(userId: number) {
+  await new Promise((resolve) => setInterval(() => resolve("Hello"), 1000));
+  return await prisma.users.findUnique({ where: { id: userId } });
+}
+
+export async function getUserRole(userId: number) {
+  const user = (await prisma.users.findUnique({ where: { id: userId }, select: { role: true } })) as { role: Role };
+  return user.role;
 }

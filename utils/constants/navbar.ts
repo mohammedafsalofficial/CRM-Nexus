@@ -1,4 +1,4 @@
-import { LayoutDashboard, BarChart2, Users, ShoppingCart, Package, Calendar } from "lucide-react";
+import { LayoutDashboard, BarChart2, Users, ShoppingCart, Package, Calendar, User } from "lucide-react";
 
 export const NAV_MENU_ITEMS = [
   {
@@ -36,5 +36,11 @@ export const NAV_MENU_ITEMS = [
     navItem: "Calendar",
     href: "/menu/calendar",
     icon: Calendar,
+  },
+  {
+    id: 7,
+    navItem: "Users Management",
+    href: "/menu/users-management",
+    icon: User,
   },
 ];

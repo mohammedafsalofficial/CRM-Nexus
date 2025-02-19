@@ -1,4 +1,4 @@
-import CurvyLines from "../components/svg/CurvyLines";
+import CurvyLines from "../../components/svg/CurvyLines";
 
 export default function Layout({
   children,

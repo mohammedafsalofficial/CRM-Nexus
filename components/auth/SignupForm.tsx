@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthResponse } from "@/app/types/auth";
+import { AuthResponse } from "@/types/auth";
 
 export default function SignupForm() {
   const [authResponse, setAuthResponse] = useState<AuthResponse>({

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import OTPCard from "../components/UI/OTPCard";
-import { decodeJwtToken } from "../utils/helper/auth";
+import OTPCard from "../../components/UI/OTPCard";
+import { decodeJwtToken } from "../../utils/helper/auth";
 
 type OtpPageProps = {
   searchParams: Promise<{ token: string }>;

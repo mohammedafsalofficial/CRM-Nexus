@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthResponse } from "@/app/types/auth";
+import { AuthResponse } from "@/types/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

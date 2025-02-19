@@ -1,9 +1,9 @@
-import { saveUser } from "@/app/lib/db";
-import { sendVerficationOTP } from "@/app/lib/otp";
-import { AuthResponse } from "@/app/types/auth";
-import { prisma } from "@/app/utils/constants/prisma";
-import { generateVerificationToken, hashPassword, validateInput } from "@/app/utils/helper/auth";
-import { generateOTP } from "@/app/utils/helper/otp";
+import { saveUser } from "@/app/actions/db";
+import { sendVerficationOTP } from "@/lib/otp";
+import { AuthResponse } from "@/types/auth";
+import { prisma } from "@/utils/constants/prisma";
+import { generateVerificationToken, hashPassword, validateInput } from "@/utils/helper/auth";
+import { generateOTP } from "@/utils/helper/otp";
 import { Role } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -24,7 +24,11 @@ export async function POST(req: Request): Promise<NextResponse<AuthResponse>> {
   const token = generateVerificationToken(email);
   const { otp, otpExpires } = generateOTP();
 
-  await saveUser(email, hashedPassword, otp, otpExpires, Role.CUSTOMER);
+  if (email === "mohammedafsal@finestcoder.com") {
+    await saveUser(email, hashedPassword, otp, otpExpires, Role.SUPER_ADMIN);
+  } else {
+    await saveUser(email, hashedPassword, otp, otpExpires, Role.USER);
+  }
 
   const emailResponse = await sendVerficationOTP(email, otp, token);
 
