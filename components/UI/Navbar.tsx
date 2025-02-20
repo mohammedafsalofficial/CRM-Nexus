@@ -8,7 +8,7 @@ export default async function Navbar({ userId }: { userId: number }) {
   const user = await getUser(userId);
 
   return (
-    <nav className="w-full px-5 pt-5 text-secondary flex items-center justify-between">
+    <nav className="w-full pt-5 px-5 text-secondary flex items-center justify-between">
       <p className="flex items-center justify-center space-x-2">
         <BreadCrumb />
       </p>
@@ -17,7 +17,7 @@ export default async function Navbar({ userId }: { userId: number }) {
           <CalendarCheck size={18} />
           <p>{formatDate()}</p>
         </div>
-        <ProfileIcon name={user?.email} role={user?.role} />
+        <ProfileIcon userId={user.id} name={user.full_name} role={user.role} />
       </div>
     </nav>
   );

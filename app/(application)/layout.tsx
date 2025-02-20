@@ -20,20 +20,19 @@ export default async function Layout({
   }
 
   return (
-    <section className="h-screen p-5">
-      <div className="h-full flex items-center justify-between">
-        <div className="h-full w-1/5 p-7 bg-gray-100 rounded-lg text-secondary">
-          <Sidebar />
-        </div>
+    <section className="h-screen flex">
+      <div className="fixed left-0 top-0 h-screen w-1/5 p-7 bg-gray-100 text-secondary shadow-lg">
+        <Sidebar />
+      </div>
 
-        <div className="h-full w-4/5 flex flex-col items-start space-y-5">
-          <Suspense fallback={<NavbarLoader />}>
-            <Navbar userId={userId} />
-          </Suspense>
+      <div className="ml-[20%] w-4/5 h-screen flex flex-col">
+        <Suspense fallback={<NavbarLoader />}>
+          <Navbar userId={userId} />
+        </Suspense>
 
-          <div className="h-[0.15rem] w-full bg-gray-200"></div>
-          <div className="px-5 h-full w-full">{children}</div>
-        </div>
+        <div className="h-[0.15rem] w-full bg-gray-200 my-2"></div>
+
+        <div className="px-5 flex-1 overflow-y-auto">{children}</div>
       </div>
     </section>
   );

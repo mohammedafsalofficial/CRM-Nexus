@@ -9,10 +9,12 @@ export async function checkUserExists(email: string): Promise<boolean> {
 }
 
 export async function saveUser(email: string, passwordHash: string, otp: string, otpExpires: Date, role: Role) {
+  console.log(email.split("@").at(0));
   await prisma.users.create({
     data: {
       email,
       password_hash: passwordHash,
+      full_name: email.split("@").at(0),
       otp,
       otpExpires,
       role,
@@ -22,7 +24,7 @@ export async function saveUser(email: string, passwordHash: string, otp: string,
 
 export async function getUser(userId: number) {
   await new Promise((resolve) => setInterval(() => resolve("Hello"), 1000));
-  return await prisma.users.findUnique({ where: { id: userId } });
+  return (await prisma.users.findUnique({ where: { id: userId } }))!;
 }
 
 export async function getUserRole(userId: number) {

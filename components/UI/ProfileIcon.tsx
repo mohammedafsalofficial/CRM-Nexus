@@ -1,15 +1,17 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut, User } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 type ProfileIconProps = {
-  name: string | undefined;
-  role: string | undefined;
+  userId: number;
+  name: string;
+  role: string;
 };
 
-export default function ProfileIcon({ name, role }: ProfileIconProps) {
+export default function ProfileIcon({ userId, name, role }: ProfileIconProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +31,7 @@ export default function ProfileIcon({ name, role }: ProfileIconProps) {
       <div className="flex items-center space-x-2 cursor-pointer">
         <Image
           className="h-10 w-10 md:h-14 md:w-14 rounded-full"
-          src="/myPhoto.jpeg"
+          src="/my-photo.jpg"
           alt="Profile"
           height={100}
           width={100}
@@ -43,8 +45,17 @@ export default function ProfileIcon({ name, role }: ProfileIconProps) {
 
       {isOpen && (
         <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-50">
-          <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">Edit Profile</button>
-          <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">Logout</button>
+          <Link
+            href={`/user/edit-profile?userId=${userId}`}
+            className="w-full text-left px-4 py-2 hover:bg-primary hover:text-white rounded-md flex items-center justify-between transition-all duration-75"
+          >
+            <span>Edit Profile</span>
+            <User />
+          </Link>
+          <button className="w-full text-left px-4 py-2 hover:bg-primary hover:text-white rounded-md flex items-center justify-between transition-all duration-75">
+            <span>Logout</span>
+            <LogOut />
+          </button>
         </div>
       )}
     </div>
