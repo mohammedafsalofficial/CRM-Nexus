@@ -1,12 +1,11 @@
-import type { ProfileBioInput } from "@/types/userProfile";
+import type { ProfileBioType } from "@/types/userProfile";
 import ProfileInput from "./ProfileInput";
 import WrapperCard from "./WrapperCard";
 
-export default function ProfileBio({ bio }: ProfileBioInput) {
+export default function ProfileBio({ bio }: ProfileBioType) {
   return (
     <WrapperCard>
-      <h1 className="font-semibold text-secondary text-xl mb-5">Bio</h1>
-      <ProfileInput inputType="textArea" labelText="" inputValue={bio} />
+      <ProfileInput inputType="textArea" labelText="Bio" inputValue={bio} />
     </WrapperCard>
   );
 }

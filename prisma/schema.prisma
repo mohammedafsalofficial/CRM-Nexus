@@ -17,10 +17,10 @@ model users {
   role          Role      @default(USER)
   permissions   Json?     
   bio           String    @default("") @db.Text         
-  interests     Json?     
-  socials       Json?     
+  interests     Json      @default("[]")
+  socials       Json      @default("{}")
   created_at    DateTime? @default(now()) @db.Timestamp(6)
-  otp           String?    @default("")
+  otp           String?   @default("")
   otpExpires    DateTime?
 }
 

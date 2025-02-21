@@ -46,7 +46,7 @@ export default function ProfileIcon({ userId, name, role }: ProfileIconProps) {
       {isOpen && (
         <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-50">
           <Link
-            href={`/user/edit-profile?userId=${userId}`}
+            href={`/edit-profile?userId=${userId}`}
             className="w-full text-left px-4 py-2 hover:bg-primary hover:text-white rounded-md flex items-center justify-between transition-all duration-75"
           >
             <span>Edit Profile</span>

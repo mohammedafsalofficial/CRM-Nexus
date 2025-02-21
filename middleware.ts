@@ -11,5 +11,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/menu/:path*", "/user/:path*"],
+  matcher: ["/menu/:path*", "/edit-profile"],
 };

@@ -4,7 +4,7 @@ import Sidebar from "../../components/UI/Sidebar";
 import { isAuthencticated } from "../actions/auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import NavbarLoader from "@/components/UI/NavbarLoader";
+import NavbarLoader from "@/components/loader/NavbarLoader";
 
 export default async function Layout({
   children,

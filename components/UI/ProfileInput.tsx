@@ -17,13 +17,18 @@ export default function ProfileInput({ labelText = "", inputType, Icon, inputVal
           <input
             className="outline-none w-full px-3 py-1 bg-transparent"
             type={inputType}
+            name={labelText}
             defaultValue={inputValue}
             disabled={notEditable}
           />
         )}
 
         {inputType === "textArea" && (
-          <textarea className="outline-none w-full px-3 py-1 text-gray-700 bg-transparent" defaultValue={inputValue} />
+          <textarea
+            className="outline-none w-full py-1 text-gray-700 bg-transparent"
+            name={labelText}
+            defaultValue={inputValue}
+          />
         )}
       </div>
     </div>

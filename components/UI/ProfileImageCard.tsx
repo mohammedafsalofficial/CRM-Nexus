@@ -23,10 +23,16 @@ export default function ProfileImageCard({ fullName }: ProfileImageType) {
         </div>
 
         <div className="space-x-3">
-          <button className="bg-gray-100 hover:bg-gray-200 text-secondary font-semibold border border-gray-600 px-3 py-1 rounded-lg">
+          <button
+            type="button"
+            className="bg-gray-100 hover:bg-gray-200 text-secondary font-semibold border border-gray-600 px-3 py-1 rounded-lg"
+          >
             Upload New
           </button>
-          <button className="bg-primary hover:bg-violet-700 text-white font-semibold  px-3 py-1 rounded-lg">
+          <button
+            type="button"
+            className="bg-primary hover:bg-violet-700 text-white font-semibold  px-3 py-1 rounded-lg"
+          >
             Save
           </button>
         </div>

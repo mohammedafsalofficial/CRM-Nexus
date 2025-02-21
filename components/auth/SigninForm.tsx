@@ -36,7 +36,7 @@ export default function SigninForm() {
 
     if (data.success) {
       currentTarget.reset();
-      setTimeout(() => router.push("/menu/dashboard"), 1000);
+      setTimeout(() => router.push("/home"), 1000);
     }
   }
 

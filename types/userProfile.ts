@@ -1,5 +1,10 @@
-import { Role } from "@prisma/client";
+import { Role, users } from "@prisma/client";
+import { JsonValue } from "@prisma/client/runtime/library";
 import { LucideIcon } from "lucide-react";
+
+export type ProfileFormType = {
+  user: users;
+};
 
 export type ProfileImageType = {
   fullName: string;
@@ -16,9 +21,13 @@ export type ProfileInputType = {
   labelText: string;
   inputType: string;
   Icon?: LucideIcon;
-  inputValue: string;
+  inputValue: string | undefined;
 };
 
-export type ProfileBioInput = {
+export type ProfileBioType = {
   bio: string;
+};
+
+export type ProfileSocialType = {
+  socials: JsonValue;
 };
